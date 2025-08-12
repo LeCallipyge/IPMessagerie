@@ -1,121 +1,124 @@
-# 📜 README – Messagerie IP avec Python, Tkinter et Sockets
+# 📜 README – IP Messaging with Python, Tkinter, and Sockets
 
 ## 📌 Description
 
-Ce projet est une **messagerie instantanée locale** en Python utilisant :
+This project is a **local instant messaging system** in Python using:
 
-* **Sockets** (`socket`) pour la communication réseau
-* **Threads** (`threading`) pour gérer l’envoi et la réception en simultané
-* **Tkinter** (`tk`, `ttk`, `scrolledtext`) pour l’interface graphique
+* **Sockets** (`socket`) for network communication
+* **Threads** (`threading`) to handle sending and receiving simultaneously
+* **Tkinter** (`tk`, `ttk`, `scrolledtext`) for the graphical interface
 
-Le système fonctionne sur le modèle **client-serveur** :
+The system works on a **client-server** model:
 
-* Un **serveur** écoute sur une IP et un port donnés.
-* Un **client** se connecte à cette adresse et échange des messages en temps réel.
+* A **server** listens on a given IP and port.
+* A **client** connects to this address and exchanges messages in real-time.
 
-Ce programme est **multi-usage** : l’IP et le port ne sont pas codés en dur, ils sont configurables via une interface avant de démarrer la discussion.
-
----
-
-## 🛠 Fonctionnement général
-
-### 1️⃣ Lancement du serveur
-
-1. **Fenêtre de configuration** :
-
-   * L’utilisateur saisit l’**adresse IP** sur laquelle le serveur doit écouter.
-     (Exemple : `0.0.0.0` pour écouter sur toutes les interfaces)
-   * L’utilisateur saisit le **port** (exemple : `5566`).
-   * Le bouton **Lancer le serveur** démarre l’écoute réseau.
-
-2. **Interface principale** :
-
-   * Une fenêtre Tkinter s’ouvre avec un **historique de chat**.
-   * Un message `"En attente de connexion..."` apparaît.
-   * En arrière-plan, un **thread** exécute `socket.accept()` pour attendre un client.
-
-3. **Connexion d’un client** :
-
-   * Quand un client se connecte, l’historique affiche :
-     `"Connexion établie avec [adresse IP]"`.
-   * Un thread dédié écoute les messages entrants du client.
-   * L’utilisateur peut taper un message et appuyer sur **Entrée** ou cliquer sur **Envoyer**.
+This program is **flexible**: the IP and port are not hardcoded, they are configurable via an interface before starting the chat.
 
 ---
 
-### 2️⃣ Lancement du client
+## 🛠 General Operation
 
-1. **Fenêtre de configuration** :
+### 1️⃣ Starting the Server
 
-   * L’utilisateur saisit l’**adresse IP du serveur**.
-   * L’utilisateur saisit le **port du serveur**.
-   * Le bouton **Se connecter** tente une connexion.
+1. **Configuration window**:
 
-2. **Interface principale** :
+   * The user enters the **IP address** on which the server will listen.
+     (Example: `0.0.0.0` to listen on all interfaces)
+   * The user enters the **port** (example: `5566`).
+   * The **Start Server** button launches the listening process.
 
-   * Un message `"Connecté au serveur"` s’affiche.
-   * Un thread écoute les messages envoyés par le serveur.
-   * L’utilisateur peut taper et envoyer des messages en **appuyant sur Entrée** ou **en cliquant sur Envoyer**.
+2. **Main interface**:
+
+   * A Tkinter window opens with a **chat history** panel.
+   * A message `"Waiting for connection..."` is displayed.
+   * In the background, a **thread** runs `socket.accept()` to wait for a client.
+
+3. **Client connection**:
+
+   * When a client connects, the history displays:
+     `"Connection established with [IP address]"`.
+   * A dedicated thread listens for incoming messages from the client.
+   * The user can type a message and press **Enter** or click **Send**.
 
 ---
 
-### 3️⃣ Communication entre serveur et client
+### 2️⃣ Starting the Client
 
-* **Une seule connexion socket** est établie et reste ouverte tant que les deux programmes tournent.
-* Chaque côté possède :
+1. **Configuration window**:
 
-  * **Un thread d’écoute** pour recevoir les messages entrants.
-  * **L’interface principale** qui envoie les messages quand on appuie sur Entrée ou le bouton.
-* Les messages reçus sont affichés dans la zone de texte avec un préfixe `"Client :"` ou `"Serveur :"`.
+   * The user enters the **server IP address**.
+   * The user enters the **server port**.
+   * The **Connect** button attempts to establish a connection.
+
+2. **Main interface**:
+
+   * A message `"Connected to server"` is displayed.
+   * A thread listens for messages sent by the server.
+   * The user can type and send messages by **pressing Enter** or **clicking Send**.
 
 ---
 
-## 📂 Structure des fichiers
+### 3️⃣ Communication Between Server and Client
+
+* **A single socket connection** is established and remains open as long as both programs are running.
+
+* Each side has:
+
+  * **A listening thread** to receive incoming messages.
+  * **The main interface** to send messages when Enter is pressed or the button is clicked.
+
+* Incoming messages are displayed in the text area with a `"Client:"` or `"Server:"` prefix.
+
+---
+
+## 📂 File Structure
 
 ```
-/projet_messagerie
-│── serveur.py  # Code côté serveur
-│── client.py   # Code côté client
+/messaging_project
+│── server.py   # Server-side code
+│── client.py   # Client-side code
 │── README.md   # Documentation
+│── LICENSE     # License
 ```
 
 ---
 
-## 🚀 Utilisation
+## 🚀 Usage
 
-### 📌 Lancer le serveur
+### 📌 Start the Server
 
 ```bash
-python serveur.py
+python server.py
 ```
 
-* Entrer l’IP et le port d’écoute dans la fenêtre.
-* Attendre qu’un client se connecte.
+* Enter the listening IP and port in the window.
+* Wait for a client to connect.
 
-### 📌 Lancer le client
+### 📌 Start the Client
 
 ```bash
 python client.py
 ```
 
-* Entrer l’IP et le port du serveur.
-* Commencer à échanger des messages.
+* Enter the server IP and port.
+* Start exchanging messages.
 
 ---
 
-## ⚙️ Technologies utilisées
+## ⚙️ Technologies Used
 
-* **Python 3
-* **Tkinter** (interfaces graphiques)
-* **Socket** (communication réseau)
-* **Threading** (envoi/réception simultanés)
+* **Python 3**
+* **Tkinter** (GUI)
+* **Socket** (network communication)
+* **Threading** (simultaneous send/receive)
 
 ---
 
 ## 💡 Notes
 
-* Pour communiquer entre deux machines différentes, elles doivent être sur **le même réseau** ou le port du serveur doit être **ouvert dans le pare-feu**.
-* Le serveur doit être lancé **avant** le client.
-* Vous pouvez tester en local avec `127.0.0.1` comme adresse IP.
+* To communicate between two different machines, they must be on **the same network** or the server port must be **open in the firewall**.
+* The server must be started **before** the client.
+* You can test locally using `127.0.0.1` as the IP address.
 
 ---
